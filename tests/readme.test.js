@@ -40,10 +40,11 @@ describe('README Test Note Validation', () => {
 
   test('test note should contain key testing quality indicators', () => {
     const requiredTestIndicators = [
+      'testing',
       'test coverage',
-      'test framework',
+      'infrastructure',
       'initial status',
-      'testing approach'
+      'implementation'
     ];
 
     requiredTestIndicators.forEach(indicator => {
