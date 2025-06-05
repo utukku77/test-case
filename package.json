@@ -1,0 +1,11 @@
+{
+  "name": "api-documentation",
+  "version": "1.0.0",
+  "description": "Project API Documentation",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
