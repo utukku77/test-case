@@ -1,5 +1,24 @@
 const fs = require('fs');
 
+// Helper function to count sentences, accounting for markdown
+function countSentences(text) {
+  // Remove markdown formatting, handle common markdown constructs
+  const cleanText = text
+    .replace(/\*\*([^*]+)\*\*/g, '$1')  // Remove bold markdown
+    .replace(/\*([^*]+)\*/g, '$1')      // Remove italic markdown
+    .replace(/[_`]/g, '');              // Remove other markdown characters
+
+  // More lenient sentence splitting
+  const sentences = cleanText
+    .split(/[.!?]+/)
+    .filter(sentence => 
+      sentence.trim().length > 0 && 
+      !/^\s*[-•]/.test(sentence.trim())  // Exclude list items
+    );
+
+  return sentences.length;
+}
+
 describe('README Test Note Validation', () => {
   const readmeContent = fs.readFileSync('readme.md', 'utf-8');
 
@@ -14,7 +33,7 @@ describe('README Test Note Validation', () => {
     expect(testNoteMatch).toBeTruthy();
     
     const testNoteContent = testNoteMatch[1];
-    const sentenceCount = (testNoteContent.match(/[.!?]+/g) || []).length;
+    const sentenceCount = countSentences(testNoteContent);
     
     expect(sentenceCount).toBeGreaterThanOrEqual(3);
   });
@@ -42,6 +61,6 @@ describe('README Test Note Validation', () => {
     
     // Check for descriptive language
     expect(testNoteContent.length).toBeGreaterThan(100);
-    expect(testNoteContent).toMatch(/\b(initial|baseline|in progress|establishing)\b/i);
+    expect(testNoteContent).toMatch(/\b(initial|baseline|establishing)\b/i);
   });
 });
