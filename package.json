@@ -2,5 +2,8 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "vitest": "^3.2.1"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }
