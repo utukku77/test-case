@@ -4,43 +4,68 @@
 This document provides comprehensive instructions for setting up and connecting to the project server, ensuring a smooth integration process.
 
 ## Prerequisites
-Before setting up the server, ensure you have the following:
+Before setting up the server, ensure you meet the following requirements:
 
-### Software Requirements
-- Node.js (v16.0.0 or higher)
-- npm (v8.0.0 or higher)
-- Git (v2.30.0 or higher)
-
-### System Requirements
-- Operating System: 
+### 1. System Prerequisites
+- **Operating System:** 
   - macOS 10.15+
   - Windows 10/11
   - Linux (Ubuntu 20.04 LTS or equivalent)
-- Minimum RAM: 8GB
-- Recommended Processor: Intel Core i5 or equivalent
 
-## Server Setup
+### 2. Software Requirements
+- **Node.js:** v16.0.0 or higher
+- **npm:** v8.0.0 or higher
+- **Git:** v2.30.0 or higher
 
-### 1. Clone the Repository
+### 3. Network Requirements
+- Open internet connection
+- Firewall configured to allow outbound connections
+- Available network port (default: 3000)
+
+## Setup and Connection
+
+### Server Installation
+1. Clone the repository:
 ```bash
 git clone https://github.com/your-organization/your-project.git
 cd your-project
 ```
 
-### 2. Install Dependencies
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-### 3. Configure Environment
-Create a `.env` file in the project root with the following configuration:
-```
+3. Configure environment:
+Create a `.env` file with the following configuration:
+```bash
 SERVER_PORT=3000
 DATABASE_URL=mongodb://localhost:27017/yourproject
 LOG_LEVEL=info
 ```
 
-### 4. Start the Server
+### Connection Methods
+
+#### Local Server Connection
+Connect to the local server using the following methods:
+
+1. **Direct HTTP Connection**:
+```javascript
+const axios = require('axios');
+
+async function connectToServer() {
+  try {
+    const response = await axios.get('http://localhost:3000/api/status');
+    console.log('Server connected successfully:', response.data);
+  } catch (error) {
+    console.error('Connection failed:', error.message);
+  }
+}
+
+connectToServer();
+```
+
+2. **Server Startup**:
 ```bash
 # Development mode
 npm run dev
@@ -49,14 +74,10 @@ npm run dev
 npm run start
 ```
 
-## Connection Methods
-
-### Local Development
-- **URL:** `http://localhost:3000`
-- **Default Port:** 3000
-
-### Connection Parameters
+#### Connection Parameters
 - **Protocol:** HTTP/HTTPS
+- **Default Port:** 3000
+- **Base URL:** `http://localhost:3000`
 - **Authentication:** JWT Token (required for most endpoints)
 
 ## Troubleshooting
@@ -70,10 +91,6 @@ npm run start
    - Verify Node.js and npm versions
    - Run `npm cache clean --force`
    - Retry `npm install`
-
-3. **Environment Configuration**
-   - Double-check `.env` file settings
-   - Verify all required environment variables are set
 
 ## Security Recommendations
 - Never commit `.env` files to version control
