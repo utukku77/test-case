@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "lint:md": "markdownlint 'readme.md'",
+    "test": "npm run lint:md"
+  },
+  "devDependencies": {
+    "markdownlint-cli": "^0.39.0"
+  }
+}
